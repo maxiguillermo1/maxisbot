@@ -1,0 +1,36 @@
+# MaxisBot
+
+MaxisBot is a personal AI operator built to convert unstructured thoughts into structured knowledge, actionable plans, and finished products.  
+It functions as a cognitive workflow layer integrating an LLM system with an Obsidian knowledge base.
+
+The system is not a conversational assistant.  
+It is an operational pipeline: idea capture → organization → planning → execution.
+
+---
+
+## Purpose
+
+Typical failure pattern:
+- ideas captured inconsistently
+- notes fragmented across tools
+- research never reused
+- projects abandoned
+
+MaxisBot exists to enforce continuity between thinking and building.
+
+Primary objective:
+Transform information into output.
+
+---
+
+## Core Principle
+
+Knowledge without execution has no value.
+
+Obsidian provides persistent storage.  
+The LLM provides reasoning.  
+MaxisBot coordinates action.
+
+---
+
+## System Model
