@@ -1,10 +1,13 @@
 # MaxisBot
 
-MaxisBot is a personal AI operator built to convert unstructured thoughts into structured knowledge, actionable plans, and finished products.  
-It functions as a cognitive workflow layer integrating an LLM system with an Obsidian knowledge base.
+MaxisBot is a personal AI operator built to convert unstructured thoughts into structured knowledge, actionable plans, and finished products.
 
-The system is not a conversational assistant.  
-It is an operational pipeline: idea capture → organization → planning → execution.
+It is an OpenClaw-style workflow system using a local CLI agent and an Obsidian markdown vault as long-term memory.
+
+This system is not a chat assistant.  
+It is an operational pipeline.
+
+capture → structure → plan → execute
 
 ---
 
@@ -14,12 +17,12 @@ Typical failure pattern:
 - ideas captured inconsistently
 - notes fragmented across tools
 - research never reused
-- projects abandoned
+- projects started but never finished
 
 MaxisBot exists to enforce continuity between thinking and building.
 
 Primary objective:
-Transform information into output.
+turn information into output.
 
 ---
 
@@ -27,9 +30,43 @@ Transform information into output.
 
 Knowledge without execution has no value.
 
-Obsidian provides persistent storage.  
-The LLM provides reasoning.  
-MaxisBot coordinates action.
+Obsidian stores memory.  
+The LLM performs reasoning.  
+MaxisBot performs operations.
+
+The system converts:
+- thoughts → knowledge
+- knowledge → plans
+- plans → tasks
+- tasks → artifacts
+
+All intelligence must produce a file, a task, or a deliverable.
+
+---
+
+## OpenClaw Philosophy
+
+MaxisBot follows an OpenClaw model.
+
+The AI is not treated as a conversational entity.  
+It is treated as a deterministic operator that executes workflows using tools.
+
+Chat systems produce explanations.  
+Operator systems produce state changes.
+
+MaxisBot therefore:
+- reads files
+- writes files
+- modifies plans
+- generates artifacts
+- iterates until completion
+
+The loop is:
+
+goal → reasoning → tool use → state update → re-evaluation → completion
+
+The agent is stateless.  
+The vault is the memory.
 
 ---
 
