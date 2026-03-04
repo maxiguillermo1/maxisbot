@@ -1,73 +1,498 @@
 # MaxisBot
 
-MaxisBot is a personal AI operator built to convert unstructured thoughts into structured knowledge, actionable plans, and finished products.
+MaxisBot is a personal AI operator designed to convert unstructured thoughts into structured knowledge, actionable plans, and finished outputs.
 
-It is an OpenClaw-style workflow system using a local CLI agent and an Obsidian markdown vault as long-term memory.
+It follows a modern **agent-runtime architecture inspired by emerging AI workflows (Anthropic, OpenAI, etc.)**, combining orchestration, tool execution, and persistent knowledge storage.
 
-This system is not a chat assistant.  
-It is an operational pipeline.
+MaxisBot is not a chatbot.
 
-capture → structure → plan → execute
+It is an **operational system**.
+
+capture → structure → plan → execute → verify → commit
 
 ---
 
-## Purpose
+# Purpose
 
-Typical failure pattern:
-- ideas captured inconsistently
-- notes fragmented across tools
-- research never reused
-- projects started but never finished
+Most knowledge systems fail because:
 
-MaxisBot exists to enforce continuity between thinking and building.
+- ideas are captured inconsistently
+- notes become fragmented across tools
+- research is never synthesized
+- projects begin but never reach completion
+
+MaxisBot solves this by enforcing a **closed operational loop** where every piece of input results in a durable output.
 
 Primary objective:
-turn information into output.
+
+**turn information into artifacts**
+
+Examples of artifacts:
+
+- markdown notes
+- summaries
+- research briefs
+- project plans
+- task lists
+- knowledge synthesis documents
+
+Every interaction must produce **state change in the system**.
 
 ---
 
-## Core Principle
+# Core Principle
 
 Knowledge without execution has no value.
 
-Obsidian stores memory.  
-The LLM performs reasoning.  
-MaxisBot performs operations.
+MaxisBot enforces the following division of responsibility:
+
+Obsidian → long-term memory  
+LLM → reasoning engine  
+Osaurus → tool runtime  
+OpenClaw → workflow orchestration  
+MaxisBot → operational layer
 
 The system converts:
-- thoughts → knowledge
-- knowledge → plans
-- plans → tasks
-- tasks → artifacts
 
-All intelligence must produce a file, a task, or a deliverable.
+thoughts → knowledge  
+knowledge → structured notes  
+notes → plans  
+plans → tasks  
+tasks → artifacts
 
----
+No reasoning is considered complete until it produces:
 
-## OpenClaw Philosophy
-
-MaxisBot follows an OpenClaw model.
-
-The AI is not treated as a conversational entity.  
-It is treated as a deterministic operator that executes workflows using tools.
-
-Chat systems produce explanations.  
-Operator systems produce state changes.
-
-MaxisBot therefore:
-- reads files
-- writes files
-- modifies plans
-- generates artifacts
-- iterates until completion
-
-The loop is:
-
-goal → reasoning → tool use → state update → re-evaluation → completion
-
-The agent is stateless.  
-The vault is the memory.
+- a file
+- a modification
+- a task
+- a structured output
 
 ---
 
-## System Model
+# Architectural Philosophy
+
+MaxisBot follows a **modern agent architecture used by advanced AI systems**.
+
+Instead of treating AI as a conversational assistant, it treats AI as an **operator executing deterministic workflows using tools**.
+
+Conversation systems produce explanations.
+
+Operator systems produce **state changes**.
+
+MaxisBot therefore focuses on:
+
+- reading files
+- writing files
+- modifying plans
+- generating artifacts
+- verifying outcomes
+
+The agent loop is:
+
+observe → plan → act → verify → commit
+
+---
+
+# System Architecture
+
+MaxisBot follows a layered architecture:
+
+```
+Telegram (mobile interface)
+        ↓
+OpenClaw (task orchestration layer)
+        ↓
+Osaurus (agent runtime / tools / memory / MCP)
+        ↓
+Local Models via Ollama (Qwen)
+        ↓
+Obsidian Vault (MaxisBrain knowledge base)
+```
+
+## Component Roles
+
+### Telegram
+
+User interface for remote interaction.
+
+Allows commands such as:
+
+```
+/capture
+/summarize
+/brief
+/tasks
+```
+
+Telegram acts as the **control surface** for the operator.
+
+---
+
+### OpenClaw
+
+OpenClaw acts as the **executive function of the system**.
+
+Responsibilities:
+
+- interpret user commands
+- create task contracts
+- select appropriate agent/model
+- enforce completion conditions
+- route tool execution requests to Osaurus
+
+OpenClaw never directly modifies files.
+
+It only coordinates workflows.
+
+---
+
+### Osaurus
+
+Osaurus acts as the **agent runtime environment**.
+
+Responsibilities:
+
+- tool execution
+- filesystem access
+- plugin management
+- memory extraction
+- skill execution
+- schedules and automation
+- Model Context Protocol (MCP)
+
+Osaurus provides:
+
+- OpenAI compatible API
+- Anthropic compatible API
+- MCP tool access
+
+Tools available include:
+
+- filesystem
+- web search
+- HTTP fetch
+- git
+- browser automation
+- time utilities
+
+---
+
+### Ollama
+
+Ollama provides **local model inference**.
+
+Models used:
+
+```
+qwen2.5:3b   → fast operator model
+qwen3.5:4b   → deep reasoning model
+```
+
+Operator routing:
+
+Fast tasks → 3B model  
+Deep reasoning → 4B model
+
+---
+
+### Obsidian
+
+Obsidian functions as the **durable knowledge store**.
+
+Vault location:
+
+```
+/Users/astrofy/Documents/MaxisBrain
+```
+
+Vault structure:
+
+```
+MaxisBrain
+├── inbox
+├── research
+├── ideas
+├── projects
+└── summaries
+```
+
+Obsidian is the **source of truth** for all system knowledge.
+
+Agents never rely on chat memory.
+
+They rely on the vault.
+
+---
+
+# Agent Workflow Model
+
+All agents follow a deterministic operational loop:
+
+1. Observe
+2. Plan
+3. Execute tools
+4. Verify outcome
+5. Commit result
+
+Example execution:
+
+User sends research via Telegram
+
+↓
+
+OpenClaw creates a capture task
+
+↓
+
+Osaurus agent analyzes the content
+
+↓
+
+Filesystem tool writes structured markdown
+
+↓
+
+Agent verifies file creation
+
+↓
+
+Result returned to user
+
+---
+
+# Core Commands
+
+MaxisBot exposes four fundamental commands.
+
+These represent the **AI operator primitives**.
+
+---
+
+## CAPTURE
+
+Store information as structured knowledge.
+
+Example:
+
+```
+/capture research
+
+Hyperliquid is a decentralized perpetual futures exchange...
+```
+
+Result:
+
+```
+/research/hyperliquid-research.md
+```
+
+---
+
+## SUMMARIZE
+
+Aggregate knowledge from the vault.
+
+Example:
+
+```
+/summarize research hyperliquid
+```
+
+Result:
+
+```
+/summaries/hyperliquid-summary.md
+```
+
+---
+
+## BRIEF
+
+Generate high-level intelligence reports.
+
+Example:
+
+```
+/brief hyperliquid
+```
+
+Result:
+
+Decision-ready research brief.
+
+---
+
+## TASKS
+
+Extract actionable items from notes.
+
+Example:
+
+```
+/tasks from inbox
+```
+
+Result:
+
+```
+/projects/tasks.md
+```
+
+---
+
+# File Writing Standard
+
+All notes follow a consistent markdown structure.
+
+```
+# Title
+
+## Summary
+• key ideas
+
+## Key Concepts
+
+## Key Points
+
+## Practical Takeaways
+
+## Source Excerpts (optional)
+```
+
+Rules:
+
+- always write `.md`
+- use kebab-case filenames
+- write files atomically
+- verify file exists after writing
+
+Example filename:
+
+```
+2026-03-04-hyperliquid-research.md
+```
+
+---
+
+# Memory Model
+
+The system follows a **stateless agent + persistent memory architecture**.
+
+Agents are disposable.
+
+Memory lives in the vault.
+
+Osaurus also maintains:
+
+- working memory
+- conversation summaries
+- knowledge graph
+- profile memory
+
+But Obsidian remains the **canonical knowledge store**.
+
+---
+
+# Automation Capabilities
+
+MaxisBot supports automated workflows through Osaurus.
+
+## Schedules
+
+Example:
+
+Daily research summary generation.
+
+```
+/summaries/daily-YYYY-MM-DD.md
+```
+
+---
+
+## Watchers
+
+Monitor folders and trigger tasks.
+
+Example:
+
+New file appears in `/inbox`
+
+↓
+
+Agent restructures it
+
+↓
+
+Moves to `/research`
+
+---
+
+## Skills
+
+Reusable capabilities stored as agent workflows.
+
+Examples:
+
+- Research Analyst
+- Market Brief Generator
+- Task Extractor
+- Debug Assistant
+
+---
+
+# Future Extensions
+
+Potential upgrades include:
+
+## Vault Retrieval System
+
+Vector search over the Obsidian vault.
+
+Enables:
+
+semantic search  
+context injection  
+knowledge synthesis
+
+---
+
+## Autonomous Research Agents
+
+Agents running continuously that:
+
+- monitor topics
+- gather sources
+- synthesize insights
+- update the vault
+
+---
+
+## Knowledge Graph
+
+Entity relationships extracted from notes.
+
+Enables:
+
+topic mapping  
+idea clustering  
+research discovery
+
+---
+
+# Design Philosophy
+
+MaxisBot is designed around one rule:
+
+AI must produce artifacts.
+
+The system does not optimize for conversation.
+
+It optimizes for:
+
+- structured knowledge
+- operational execution
+- durable outputs
+
+MaxisBot is therefore not an assistant.
+
+It is an **AI operating system for thought and execution.**
